@@ -47,18 +47,18 @@ const updateReview = asyncHandler(async(req, res) => {
         res.status(400)
         throw new Error('Review not found')
     }
-    const user = await User.findById(req.user.id)
+    //const user = await User.findById(req.user.id)
 
 
     // Check for user
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error('User not found')
     }
 
 
     // Make sure the logged in user matches the goal user
-    if(review.user.toString() !== user.id) {
+    if(review.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }
@@ -82,11 +82,11 @@ const deleteReview = asyncHandler(async(req, res) => {
         res.status(400)
         throw new Error('Review not found')
     }
-    const user = await User.findById(req.user.id)
+    //const user = await User.findById(req.user.id)
 
 
     // Check for user
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error('User not found')
     }
@@ -94,7 +94,7 @@ const deleteReview = asyncHandler(async(req, res) => {
 
     // Make sure the logged in user matches the goal user
     // i.e. John (login) but the goal belongs to May
-    if(review.user.toString() !== user.id) {
+    if(review.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }
